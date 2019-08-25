@@ -30,6 +30,35 @@ exports.getUserIngresos = (req, res, next) => {
     })
     .catch(err => res.status(201).json({ err }));
 };
+exports.getUserIngresosYear = (req, res, next) => {
+  const { rfc } = req.params;
+  const { year } = req.params;
+  Movimiento.find({ rfc })
+    .then(movimientos => {
+      let ar = [];
+      movimientos.map(movimiento => {
+        if (year == movimiento.date.toString().slice(11, 15)) {
+          let ingresos = {
+            uuid: movimiento.uuid,
+            ccyisocode: movimiento.ccyisocode,
+            paymentmethod: movimiento.paymentmethod,
+            subtotal: movimiento.subtotal,
+            total: movimiento.total,
+            placegenerated: movimiento.placegenerated,
+            date: movimiento.date,
+            receptorrfc: movimiento.receptorrfc,
+            receptorname: movimiento.receptorname,
+            productid: movimiento.productid,
+            quantity: movimiento.quantity,
+            month: movimiento.date.toString().slice(4, 7)
+          };
+          ar.push(ingresos);
+        }
+      });
+      res.status(201).json(ar);
+    })
+    .catch(err => res.status(201).json({ err }));
+};
 exports.getUserGastos = (req, res, next) => {
   const { rfc } = req.params;
   Movimiento.find({ rfc })
@@ -55,7 +84,6 @@ exports.getUserGastosYear = (req, res, next) => {
     .then(movimientos => {
       let ar = [];
       movimientos.map(movimiento => {
-        console.log(movimiento.date.toString());
         if (year == movimiento.date.toString().slice(11, 15)) {
           let ingresos = {
             productid: movimiento.productid,
