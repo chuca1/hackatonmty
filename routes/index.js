@@ -13,18 +13,19 @@ const {
   getUserIngresos,
   getUserGastos,
   getUserGastosYear,
-  getUserIngresosYear
+  getUserIngresosYear,
+  uploadcvs
 } = require("../controllers/movimientos.controllers");
 
 const { verifyToken } = require("../config/jwt");
+
 /* GET home page */
 router.get("/", getAllMovimientos);
 router.get("/:rfc/ingresos", getUserIngresos);
 router.get("/:rfc/gastos", getUserGastos);
 router.get("/:rfc/gastos/:year", getUserGastosYear);
 router.get("/:rfc/ingresos/:year", getUserIngresosYear);
-module.exports = router;
-
+router.post("/:rfc/cvs/upload", uploadcvs);
 /* GET home page */
 router.post("/signup", signup);
 router.post("/login", passport.authenticate("local"), login);

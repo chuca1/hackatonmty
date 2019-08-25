@@ -1,5 +1,6 @@
 const Movimiento = require("../models/Movimiento");
-const User = require("../models/User");
+const csv = require("csvtojson");
+
 exports.getAllMovimientos = (req, res, next) => {
   Movimiento.find()
     .then(movimientos => res.status(201).json({ movimientos }))
@@ -97,4 +98,20 @@ exports.getUserGastosYear = (req, res, next) => {
       res.status(201).json(ar);
     })
     .catch(err => res.status(201).json({ err }));
+};
+exports.uploadcvs = (req, res, next) => {
+  console.log(req);
+  // csv()
+  //   .fromFile(req.file)
+  //   .then(jsonObj => {
+  //     mongoose
+  //       .connect(process.env.DB, { useNewUrlParser: true })
+  //       .then(async () => {
+  //         const movimiento = await Movimiento.create(jsonObj);
+  //         console.log(`${movimiento.length}, movimienots created`);
+  //         mongoose.connection.close();
+  //       })
+  //       .catch(err => console.log(err));
+  //   })
+  //   .catch(err => console.log(err));
 };
