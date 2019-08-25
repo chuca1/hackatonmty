@@ -21,28 +21,25 @@ let storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage });
+exports.upload = multer({ storage });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-exports.uploadCVS =
-  ("/upload",
-  upload.single("file"),
-  (req, res) => {
-    console.log(req.file.path);
+exports.uploadCVS = (req, res) => {
+  console.log(req.file.path);
 
-    csv()
-      .fromFile(req.file.path)
-      .then(jsonObj => {
-        mongoose
-          .connect(uri, { useNewUrlParser: true })
-          .then(async () => {
-            const movimiento = await Movimiento.create(jsonObj);
-            console.log(`${movimiento.length}, movimienots created`);
-            mongoose.connection.close();
-          })
-          .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
-  });
+  csv()
+    .fromFile(req.file.path)
+    .then(jsonObj => {
+      mongoose
+        .connect(uri, { useNewUrlParser: true })
+        .then(async () => {
+          const movimiento = await Movimiento.create(jsonObj);
+          console.log(`${movimiento.length}, movimienots created`);
+          mongoose.connection.close();
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+};
