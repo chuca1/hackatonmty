@@ -5,7 +5,7 @@ const ingresosSchema = new Schema(
     monto: Number,
     descripcion: String,
     fecha: Date,
-    userid: Numbers
+    userid: String
   },
   {
     versionKey: false,
