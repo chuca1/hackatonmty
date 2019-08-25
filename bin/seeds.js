@@ -1,5 +1,5 @@
 const csv = require("csvtojson");
-const csvFilePath = __dirname + "/JXA0004269K14.csv";
+const csvFilePath = __dirname + "uploads\file-1566741109241.csv";
 const mongoose = require("mongoose");
 const Movimiento = require("../models/Movimiento");
 require("dotenv").config();
