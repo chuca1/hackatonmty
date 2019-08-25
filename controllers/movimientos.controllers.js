@@ -99,19 +99,13 @@ exports.getUserGastosYear = (req, res, next) => {
     })
     .catch(err => res.status(201).json({ err }));
 };
-exports.uploadcvs = (req, res, next) => {
-  console.log(req);
-  // csv()
-  //   .fromFile(req.file)
-  //   .then(jsonObj => {
-  //     mongoose
-  //       .connect(process.env.DB, { useNewUrlParser: true })
-  //       .then(async () => {
-  //         const movimiento = await Movimiento.create(jsonObj);
-  //         console.log(`${movimiento.length}, movimienots created`);
-  //         mongoose.connection.close();
-  //       })
-  //       .catch(err => console.log(err));
-  //   })
-  //   .catch(err => console.log(err));
+exports.uploadIngreso = (req, res, next) => {
+  Movimiento.create(req.body)
+    .then(res.status(201))
+    .catch(res.status(500));
+};
+exports.uploadGasto = (req, res, next) => {
+  Movimiento.create(req.body)
+    .then(res.status(201))
+    .catch(res.status(500));
 };
