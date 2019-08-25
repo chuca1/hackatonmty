@@ -1,5 +1,6 @@
 const Movimiento = require("../models/Movimiento");
-const User = require("../models/User");
+const csv = require("csvtojson");
+
 exports.getAllMovimientos = (req, res, next) => {
   Movimiento.find()
     .then(movimientos => res.status(201).json({ movimientos }))
@@ -30,6 +31,35 @@ exports.getUserIngresos = (req, res, next) => {
     })
     .catch(err => res.status(201).json({ err }));
 };
+exports.getUserIngresosYear = (req, res, next) => {
+  const { rfc } = req.params;
+  const { year } = req.params;
+  Movimiento.find({ rfc })
+    .then(movimientos => {
+      let ar = [];
+      movimientos.map(movimiento => {
+        if (year == movimiento.date.toString().slice(11, 15)) {
+          let ingresos = {
+            uuid: movimiento.uuid,
+            ccyisocode: movimiento.ccyisocode,
+            paymentmethod: movimiento.paymentmethod,
+            subtotal: movimiento.subtotal,
+            total: movimiento.total,
+            placegenerated: movimiento.placegenerated,
+            date: movimiento.date,
+            receptorrfc: movimiento.receptorrfc,
+            receptorname: movimiento.receptorname,
+            productid: movimiento.productid,
+            quantity: movimiento.quantity,
+            month: movimiento.date.toString().slice(4, 7)
+          };
+          ar.push(ingresos);
+        }
+      });
+      res.status(201).json(ar);
+    })
+    .catch(err => res.status(201).json({ err }));
+};
 exports.getUserGastos = (req, res, next) => {
   const { rfc } = req.params;
   Movimiento.find({ rfc })
@@ -55,7 +85,6 @@ exports.getUserGastosYear = (req, res, next) => {
     .then(movimientos => {
       let ar = [];
       movimientos.map(movimiento => {
-        console.log(movimiento.date.toString());
         if (year == movimiento.date.toString().slice(11, 15)) {
           let ingresos = {
             productid: movimiento.productid,
@@ -69,4 +98,20 @@ exports.getUserGastosYear = (req, res, next) => {
       res.status(201).json(ar);
     })
     .catch(err => res.status(201).json({ err }));
+};
+exports.uploadcvs = (req, res, next) => {
+  console.log(req);
+  // csv()
+  //   .fromFile(req.file)
+  //   .then(jsonObj => {
+  //     mongoose
+  //       .connect(process.env.DB, { useNewUrlParser: true })
+  //       .then(async () => {
+  //         const movimiento = await Movimiento.create(jsonObj);
+  //         console.log(`${movimiento.length}, movimienots created`);
+  //         mongoose.connection.close();
+  //       })
+  //       .catch(err => console.log(err));
+  //   })
+  //   .catch(err => console.log(err));
 };
