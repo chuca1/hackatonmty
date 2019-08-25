@@ -22,7 +22,7 @@ router.get("/", getAllMovimientos);
 router.get("/:rfc/ingresos", getUserIngresos);
 router.get("/:rfc/gastos", getUserGastos);
 router.get("/:rfc/gastos/:year", getUserGastosYear);
-router.get("/:rfc/ingresos/:year", getUserGastosYear);
+router.get("/:rfc/ingresos/:year", getUserIngresosYear);
 module.exports = router;
 
 /* GET home page */
