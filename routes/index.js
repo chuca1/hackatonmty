@@ -1,5 +1,5 @@
 const express = require("express");
-let uploads = require("./bin/uploads");
+let upload = require("../bin/upload");
 const router = express.Router();
 const {
   getAllMovimientos,
@@ -12,5 +12,5 @@ router.get("/", getAllMovimientos);
 router.get("/:rfc/ingresos", getUserIngresos);
 router.get("/:rfc/gastos", getUserGastos);
 router.get("/:rfc/gastos/:year", getUserGastosYear);
-router.post("upload/");
+router.post("upload/", upload.uploadCVS);
 module.exports = router;

@@ -1,4 +1,4 @@
-const PORT = 3000;
+const PORT = process.env.PORT;
 const express = require("express");
 const app = express();
 const csv = require("csvtojson");
@@ -46,7 +46,3 @@ exports.uploadCVS =
       })
       .catch(err => console.log(err));
   });
-
-app.listen(PORT, () => {
-  console.log(`Server UP: ${PORT}`);
-});
