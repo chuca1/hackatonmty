@@ -50,17 +50,18 @@ exports.getUserGastos = (req, res, next) => {
 exports.getUserGastosYear = (req, res, next) => {
   const { rfc } = req.params;
   const { year } = req.params;
+
   Movimiento.find({ rfc })
     .then(movimientos => {
       let ar = [];
       movimientos.map(movimiento => {
-        
-        
-        if (year ==movimiento.date.toString().slice(11,15)) {
+        console.log(movimiento.date.toString());
+        if (year == movimiento.date.toString().slice(11, 15)) {
           let ingresos = {
             productid: movimiento.productid,
             quantity: movimiento.quantity,
-            cost: movimiento.cost
+            cost: movimiento.cost,
+            month: movimiento.date.toString().slice(4, 7)
           };
           ar.push(ingresos);
         }
